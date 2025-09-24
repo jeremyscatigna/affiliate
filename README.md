@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BCJ Affiliate Platform
 
-## Getting Started
+Plateforme d'affiliation simple et efficace pour gérer les partenaires et les commissions.
 
-First, run the development server:
+## Configuration
+
+### 1. Supabase
+
+1. Créez un projet sur [supabase.com](https://supabase.com)
+2. Récupérez l'URL de connexion dans Settings > Database
+
+### 2. Variables d'environnement
+
+Créez un fichier `.env.local` et ajoutez vos clés Supabase :
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+NEXT_PUBLIC_SUPABASE_URL=votre_url_supabase
+NEXT_PUBLIC_SUPABASE_ANON_KEY=votre_clé_anon
+DATABASE_URL=postgresql://postgres.[PROJECT-REF]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:5432/postgres
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Configuration Admin
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Dans `src/app/admin/page.tsx`, remplacez l'email admin :
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```typescript
+const ADMIN_EMAIL = 'votre-email@exemple.com'
+```
 
-## Learn More
+### 4. WhatsApp
 
-To learn more about Next.js, take a look at the following resources:
+Dans `src/app/ref/[code]/page.tsx`, remplacez le numéro WhatsApp :
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```typescript
+const whatsappNumber = 'VOTRE_NUMERO' // Format: 33612345678
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Installation
 
-## Deploy on Vercel
+```bash
+# Installer les dépendances
+npm install
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Créer les tables dans Supabase
+npm run db:push
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Ou générer les fichiers de migration
+npm run db:generate
+npm run db:migrate
+
+# Lancer l'application
+npm run dev
+```
+
+### Commandes Drizzle
+
+- `npm run db:push` - Pushe le schéma directement vers Supabase (dev)
+- `npm run db:generate` - Génère les fichiers de migration
+- `npm run db:migrate` - Exécute les migrations
+- `npm run db:studio` - Interface visuelle pour explorer la DB
+
+## Utilisation
+
+### Pour les affiliés
+
+1. **Inscription** : `/signup`
+2. **Connexion** : `/login`  
+3. **Dashboard** : `/dashboard`
+   - Lien d'affiliation unique
+   - Suivi des prospects
+   - Historique des commissions
+
+### Pour l'admin
+
+1. **Interface admin** : `/admin`
+   - Validation des affiliés
+   - Gestion des prospects
+   - Création de factures
+   - Suivi des commissions
+
+### Flow de conversion
+
+1. L'affilié partage son lien : `votresite.com/ref/[CODE]`
+2. Le prospect remplit le formulaire
+3. Redirection automatique vers WhatsApp
+4. L'admin peut suivre et convertir les prospects
+
+## Structure
+
+```
+src/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/
+│   │   └── signup/
+│   ├── admin/
+│   ├── dashboard/
+│   └── ref/[code]/
+├── components/
+│   ├── auth/
+│   ├── admin/
+│   └── dashboard/
+└── lib/
+    └── supabase/
+```
+
+## Commissions
+
+- **Taux** : 20% sur chaque facture
+- **Calcul** : Automatique à la création de facture
+- **Paiement** : Manuel via l'interface admin

@@ -1,0 +1,8 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="95" fill="#F5E6D3"/>
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#D4AF37" stroke-width="2" stroke-dasharray="5 3"/>
+  <path d="M50 60 Q100 40 150 60 L150 140 Q100 160 50 140 Z" fill="#D4AF37" opacity="0.1"/>
+  <text x="100" y="110" font-family="serif" font-size="48" font-weight="bold" text-anchor="middle" fill="#D4AF37">BCJ</text>
+  <path d="M70 70 Q80 65 90 70 M110 70 Q120 65 130 70" stroke="#D4AF37" stroke-width="2" fill="none"/>
+  <path d="M60 130 Q100 140 140 130" stroke="#D4AF37" stroke-width="2" fill="none"/>
+</svg>
