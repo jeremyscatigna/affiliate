@@ -31,7 +31,7 @@ export function BankInfoForm({ affiliateId, initialBankInfo }: BankInfoFormProps
     setSaved(false)
 
     try {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('affiliates')
         .update({ bank_info: bankInfo })
         .eq('id', affiliateId)

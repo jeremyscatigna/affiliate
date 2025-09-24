@@ -33,7 +33,7 @@ export function SignupForm() {
 
       if (authData.user) {
         // Create affiliate record
-        const { error: affiliateError } = await supabase
+        const { error: affiliateError } = await (supabase as any)
           .from('affiliates')
           .insert({
             id: authData.user.id,
@@ -46,7 +46,7 @@ export function SignupForm() {
         // Generate referral code
         const code = `${name.toLowerCase().replace(/\s+/g, '')}_${Math.random().toString(36).substr(2, 6)}`
         
-        const { error: linkError } = await supabase
+        const { error: linkError } = await (supabase as any)
           .from('referral_links')
           .insert({
             affiliate_id: authData.user.id,

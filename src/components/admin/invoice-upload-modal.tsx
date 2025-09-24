@@ -67,7 +67,7 @@ export function InvoiceUploadModal({ prospects, open, onOpenChange, onSuccess }:
       }
 
       // Create invoice
-      const { data: invoice, error: invoiceError } = await supabase
+      const { data: invoice, error: invoiceError } = await (supabase as any)
         .from('invoices')
         .insert({
           prospect_id: formData.prospectId,
@@ -84,7 +84,7 @@ export function InvoiceUploadModal({ prospects, open, onOpenChange, onSuccess }:
 
       // Create commission (20%)
       const commissionAmount = parseFloat(formData.amount) * 0.2
-      const { error: commissionError } = await supabase
+      const { error: commissionError } = await (supabase as any)
         .from('commissions')
         .insert({
           affiliate_id: prospect.affiliate_id,
@@ -95,7 +95,7 @@ export function InvoiceUploadModal({ prospects, open, onOpenChange, onSuccess }:
       if (commissionError) throw commissionError
 
       // Update prospect to client
-      await supabase
+      await (supabase as any)
         .from('prospects')
         .update({ status: 'client' })
         .eq('id', formData.prospectId)

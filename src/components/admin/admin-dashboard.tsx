@@ -28,7 +28,7 @@ export function AdminDashboard({ affiliates, prospects, invoices }: AdminDashboa
   const [invoiceUploadModalOpen, setInvoiceUploadModalOpen] = useState(false)
 
   const handleAffiliateStatusChange = async (affiliateId: string, newStatus: string) => {
-    await supabase
+    await (supabase as any)
       .from('affiliates')
       .update({ status: newStatus })
       .eq('id', affiliateId)
@@ -37,7 +37,7 @@ export function AdminDashboard({ affiliates, prospects, invoices }: AdminDashboa
   }
 
   const handleProspectStatusChange = async (prospectId: string, newStatus: string) => {
-    await supabase
+    await (supabase as any)
       .from('prospects')
       .update({ status: newStatus })
       .eq('id', prospectId)
@@ -47,7 +47,7 @@ export function AdminDashboard({ affiliates, prospects, invoices }: AdminDashboa
 
 
   const handleMarkCommissionPaid = async (commissionId: string) => {
-    await supabase
+    await (supabase as any)
       .from('commissions')
       .update({ 
         paid: true,

@@ -30,7 +30,7 @@ export default function ReferralPage() {
     // Track click
     const trackClick = async () => {
       try {
-        await supabase.rpc('increment_clicks', { referral_code: code })
+        await (supabase as any).rpc('increment_clicks', { referral_code: code })
       } catch (err) {
         console.error('Error tracking click:', err)
       }
@@ -46,7 +46,7 @@ export default function ReferralPage() {
 
     try {
       // Get affiliate ID from code
-      const { data: linkData, error: linkError } = await supabase
+      const { data: linkData, error: linkError } = await (supabase as any)
         .from('referral_links')
         .select('affiliate_id')
         .eq('code', code)
@@ -57,7 +57,7 @@ export default function ReferralPage() {
       }
 
       // Create prospect
-      const { error: prospectError } = await supabase
+      const { error: prospectError } = await (supabase as any)
         .from('prospects')
         .insert({
           affiliate_id: linkData.affiliate_id,
